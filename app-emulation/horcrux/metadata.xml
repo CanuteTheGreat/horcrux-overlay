@@ -2,8 +2,8 @@
 <!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
 	<maintainer type="person">
-		<email>maintainer@horcrux-project.org</email>
-		<name>Horcrux Development Team</name>
+		<email>canutethegreat@errant.solutions</email>
+		<name>CanuteTheGreat</name>
 	</maintainer>
 	<longdescription lang="en">
 		Horcrux is a Proxmox VE alternative built natively for Gentoo Linux,
@@ -103,7 +103,6 @@
 		<flag name="nas-lvm">Enable LVM thin provisioning for NAS storage</flag>
 	</use>
 	<upstream>
-		<remote-id type="github">horcrux-project/horcrux</remote-id>
-		<bugs-to>https://github.com/horcrux-project/horcrux/issues</bugs-to>
+		<bugs-to>https://git.canutethegreat.com/CanuteTheGreat/horcrux/issues</bugs-to>
 	</upstream>
 </pkgmetadata>
