@@ -6,7 +6,7 @@ EAPI=8
 inherit gnome2-utils
 
 DESCRIPTION="Horcrux Surface tablet desktop: XFCE + LightDM, touch/pen, on-screen keyboard, power policy, media keys"
-HOMEPAGE="https://git.canutethegreat.com/CanuteTheGreat/horcrux"
+HOMEPAGE="https://horcrux.errant.solutions/"
 S="${WORKDIR}"
 
 LICENSE="GPL-2"
@@ -59,13 +59,6 @@ RDEPEND="
 
 src_install() {
 
-	# the Horcrux os-release (sys-apps/horcrux-release) names this layer: its flags are read from package.use. Shipped here, so the
-	# installed system keeps its variant on every update (a USE dependency would stop `emerge -u` on a host that lacks the flags).
-	insinto /etc/portage/package.use
-	newins - horcrux-release-machine <<-EOF3
-		# owned by this package
-		sys-apps/horcrux-release surface
-	EOF3
 	cp -a "${FILESDIR}/root/." "${ED}/" || die
 	local f
 	for f in "${ED}"/usr/bin/*; do fperms 0755 "${f#"${ED}"}"; done
