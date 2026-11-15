@@ -16,7 +16,7 @@ KEYWORDS="amd64 arm64"
 # LAYERING (owner 2026-11-03: "It should work on a headless server too. It shouldn't be a desktop-only OS."):
 #   core            this package: server + hypervisor, NO display stack, NO desktop, NO machine-specific app (steam, rustinion, ... live in a machine layer)
 #   desktop edition gnome-extra/horcrux-gnome-defaults (GNOME) depends on THIS package; the XFCE edition for small devices does the same
-#   machine layers  the owner's own machines (gringotts, hogshead, surface, hogsmeade) add their apps on top of an edition
+#   machine layers  the owner's own machines (gringotts, hogshead, surface, owner-ws) add their apps on top of an edition
 # Every fix that applies to every Horcrux install belongs here (or in a package listed here), never in an edition: the 2026-11-03 gringotts fixes (clock
 # hook, first-boot network wait, kept dev files, zfs dist-kernel USE) had been attached to the GNOME package and a server install would have missed them.
 # sys-apps/horcrux-release: the package-owned /usr/lib/os-release (name, version, build id, variant); every Horcrux install has it.
@@ -27,13 +27,13 @@ KEYWORDS="amd64 arm64"
 # /etc/docker/daemon.json ("ip-forward-no-drop"):
 #   Docker >= 28 sets the iptables FORWARD policy to DROP when it enables IP forwarding. nftables evaluates EVERY base chain a packet hits, so that DROP
 #   also kills traffic libvirt/Horcrux already accepted in its own table: every NAT-network VM (virbr0, vmbr*) lost the internet whenever dockerd ran
-#   (HOGSMEADE 2026-11-12: captainjacksparrow could not reach ProtonVPN). With this option Docker leaves the policy alone; it still isolates its own
+#   (owner-ws 2026-11-12: example-vm could not reach ProtonVPN). With this option Docker leaves the policy alone; it still isolates its own
 #   bridges (DOCKER-FORWARD / DOCKER-ISOLATION / per-network DROP of unpublished ports). The file is harmless where Docker is not installed
 #   (QEMU gate docker-does-not-break-vm-nat-forwarding checks it everywhere and does the netns forwarding test where Docker exists).
 # sys-auth/horcrux-ssh-pam (-r2): ssh logins do not start or hold the user's OpenRC user services (pam_openrc stops them only with the user's LAST
 #   login, so an ssh session kept a logged-out GNOME session's gnome-shell alive; also keeps servers' ssh logins from spawning user services).
 # /usr/lib/udev/rules.d/80-horcrux-udisks-hide.rules: UDISKS_IGNORE for ZFS pool members/zvols, the installer's mirror ESP/boot copies and the swap, so
-#   GNOME Files / Thunar (udisks2+gvfs) never list rpool, boot2, ESP2 ... as removable drives (HOGSMEADE 2026-11-13). Init-neutral: plain udev rules.
+#   GNOME Files / Thunar (udisks2+gvfs) never list rpool, boot2, ESP2 ... as removable drives (observed on a desktop install). Init-neutral: plain udev rules.
 RDEPEND="
 	sys-auth/horcrux-ssh-pam
 	net-misc/chrony
